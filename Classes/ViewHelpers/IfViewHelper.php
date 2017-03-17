@@ -98,7 +98,7 @@
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License, version 3 or later
  * @api
  */
-class Tx_RoqNewsevent_ViewHelpers_IfViewHelper extends Tx_Fluid_Core_ViewHelper_AbstractConditionViewHelper {
+class Tx_RoqNewsevent_ViewHelpers_IfViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractConditionViewHelper {
 
 	public function initializeArguments() {
 		parent::initializeArguments();
@@ -140,7 +140,7 @@ class Tx_RoqNewsevent_ViewHelpers_IfViewHelper extends Tx_Fluid_Core_ViewHelper_
 			} else if ($condition instanceof stdClass) {
 				return $this->renderThenChild();
 			} else {
-				$access = t3lib_div::makeInstance('Tx_Extbase_Reflection_ObjectAccess');
+				$access = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('Tx_Extbase_Reflection_ObjectAccess');
 				$propertiesCount = count($access->getGettableProperties($condition));
 				if ($propertiesCount > 0) {
 					return $this->renderThenChild();

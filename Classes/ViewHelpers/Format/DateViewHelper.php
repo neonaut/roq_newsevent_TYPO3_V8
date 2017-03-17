@@ -28,7 +28,7 @@
  * @package TYPO3
  * @subpackage tx_news
  */
-class Tx_RoqNewsevent_ViewHelpers_Format_DateViewHelper extends Tx_Fluid_Core_ViewHelper_AbstractViewHelper {
+class Tx_RoqNewsevent_ViewHelpers_Format_DateViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper {
 
 	/**
 	 * Render the supplied DateTime object as a formatted date.
@@ -58,7 +58,7 @@ class Tx_RoqNewsevent_ViewHelpers_Format_DateViewHelper extends Tx_Fluid_Core_Vi
 			try {
 				$date = new DateTime($date);
 			} catch (Exception $exception) {
-				throw new Tx_Fluid_Core_ViewHelper_Exception('"' . $date . '" could not be parsed by DateTime constructor.', 1241722579);
+				throw new \TYPO3\CMS\Fluid\Core\ViewHelper\Exception('"' . $date . '" could not be parsed by DateTime constructor.', 1241722579);
 			}
 		}
 
