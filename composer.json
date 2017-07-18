@@ -1,0 +1,15 @@
+{
+  "name": "roquin/roq_newsevent",
+  "description": "Event extension based on the versatile news system. Supplies additional event functionality to news records.",
+  "type": "typo3-cms-extension",
+  "license": "GPL-2.0",
+  "require": {
+    "typo3/cms": "^7.6 || ^8.7",
+    "georgringer/news": "^5.0 || ^6.0"
+  },
+  "autoload": {
+    "psr-0": {
+      "Tx_RoqNewsevent_": "Classes"
+    }
+  }
+}
