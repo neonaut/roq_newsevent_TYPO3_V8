@@ -1,4 +1,5 @@
 <?php
+namespace ROQUIN\RoqNewsevent\ViewHelpers\Format;
 
 /*                                                                        *
  * This script belongs to the FLOW3 package "Fluid".                      *
@@ -19,6 +20,9 @@
  *                                                                        *
  * The TYPO3 project - inspiring people to share!                         *
  *                                                                        */
+
+use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
+use TYPO3\CMS\Fluid\Core\ViewHelper\Exception;
 
 /**
  * Formats a DateTime object.
@@ -62,7 +66,8 @@
  * </code>
  * <output>
  * 13.12.1980 - 21:03:42
- * (depending on the current time. Don't forget the "@" in front of the timestamp see http://www.php.net/manual/en/function.strtotime.php)
+ * (depending on the current time. Don't forget the "@" in front of the timestamp see
+ * http://www.php.net/manual/en/function.strtotime.php)
  * </output>
  *
  * <code title="Inline notation">
@@ -84,39 +89,42 @@
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License, version 3 or later
  * @api
  */
-class Tx_RoqNewsevent_ViewHelpers_Format_TimeViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper {
+class TimeViewHelper extends AbstractViewHelper
+{
+    /**
+     * Render the supplied DateTime object as a formatted date.
+     *
+     * @param mixed $time either a DateTime object or a string that is accepted by DateTime constructor
+     * @param string $format Format String which is taken to format the Date/Time
+     * @return string Formatted time
+     * @throws Exception
+     */
+    public function render($time = null, $format = 'H:i:s')
+    {
+        $timeStamp = null;
+        $timeZoneOffset = null;
 
-	/**
-	 * Render the supplied DateTime object as a formatted date.
-	 *
-	 * @param mixed $time either a DateTime object or a string that is accepted by DateTime constructor
-	 * @param string $format Format String which is taken to format the Date/Time
-	 * @return string Formatted time
-	 */
-	public function render($time = NULL, $format = 'H:i:s') {
-        $timeStamp      = NULL;
-        $timeZoneOffset = NULL;
+        if ($time === null) {
+            $time = $this->renderChildren();
+            if ($time === null) {
+                return '';
+            }
+        }
 
-		if ($time === NULL) {
-			$time = $this->renderChildren();
-			if ($time === NULL) {
-				return '';
-			}
-		}
-
-		if (!$time instanceof DateTime) {
-			try {
-                $time = new DateTime($time);
-			} catch (Exception $exception) {
-				throw new \TYPO3\CMS\Fluid\Core\ViewHelper\Exception('"' . $time . '" could not be parsed by DateTime constructor.', 1241722579);
-			}
-		}
+        if (!$time instanceof \DateTime) {
+            try {
+                $time = new \DateTime($time);
+            } catch (\Exception $exception) {
+                throw new Exception(
+                    '"' . $time . '" could not be parsed by DateTime constructor.',
+                    1241722579
+                );
+            }
+        }
 
         $timeZoneOffset = $time->getTimezone()->getOffset($time);
-        $timeStamp      = $time->getTimestamp();
+        $timeStamp = $time->getTimestamp();
 
         return date($format, $timeStamp - $timeZoneOffset);
     }
 }
-
-?>

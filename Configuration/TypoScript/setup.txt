@@ -3,7 +3,7 @@
 config.tx_extbase {
 	persistence {
 		classes {
-			Tx_RoqNewsevent_Domain_Model_Event {
+			ROQUIN\RoqNewsevent\Domain\Model\Event {
 				mapping {
 					tableName = tx_news_domain_model_news
 					columns {
@@ -21,7 +21,7 @@ config.tx_extbase {
 
 	objects {
 		GeorgRinger\News\Controller\NewsController {
-			className = Tx_RoqNewsevent_Controller_EventController
+			className = ROQUIN\RoqNewsevent\Controller\EventController
 		}
 	}
 }
@@ -35,7 +35,7 @@ plugin.tx_news {
 					# hier wichtig: index 0 überschreiben für die
 					# normale News-Ansicht
 					# 0 == Typ-Auswahl an News-Datensatz
-					0 = Tx_RoqNewsevent_Domain_Model_Event
+					0 = ROQUIN\RoqNewsevent\Domain\Model\Event
 				}
 			}
 		}

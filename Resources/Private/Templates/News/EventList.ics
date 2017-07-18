@@ -1,7 +1,7 @@
 BEGIN:VCALENDAR<e:format.trim replaceDoubleSpaces="FALSE" useWindowsLineEndings="TRUE" removeNewlineTags="TRUE">
 
     {namespace n=GeorgRinger\News\ViewHelpers}
-    {namespace e=Tx_RoqNewsevent_ViewHelpers}
+    {namespace e=ROQUIN\RoqNewsevent\ViewHelpers}
 
     VERSION:2.0
     PRODID:-//XYZ Corp//My Product//EN

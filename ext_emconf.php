@@ -1,54 +1,22 @@
 <?php
-
-/***************************************************************
- * Extension Manager/Repository config file for ext "roq_newsevent".
- *
- * Auto generated 20-01-2014 16:02
- *
- * Manual updates:
- * Only the data in the array - everything else is removed by next
- * writing. "version" and "dependencies" must not be touched!
- ***************************************************************/
-
-$EM_CONF[$_EXTKEY] = array (
-	'title' => 'News event',
-	'description' => 'Event extension based on the versatile news system. Supplies additional event functionality to news records.',
-	'category' => 'plugin',
-	'shy' => 0,
-	'version' => '3.0.2-dev',
-	'dependencies' => 'news',
-	'conflicts' => '',
-	'priority' => '',
-	'loadOrder' => '',
-	'module' => '',
-	'state' => 'stable',
-	'uploadfolder' => 0,
-	'createDirs' => '',
-	'modify_tables' => 'tx_news_domain_model_news',
-	'clearcacheonload' => 1,
-	'lockType' => '',
-	'author' => 'ROQUIN B.V.',
-	'author_email' => 'extensions@roquin.nl',
-	'author_company' => 'ROQUIN B.V.',
-	'CGLcompliance' => NULL,
-	'CGLcompliance_note' => NULL,
-	'constraints' => 
-	array (
-		'depends' => 
-		array (
-			'typo3' => '7.6.0-',
-			'news' => '5.3.2-',
-		),
-		'conflicts' => 
-		array (
-		),
-		'suggests' => 
-		array (
-		),
-	),
-	'suggests' => 
-	array (
-	),
-);
-
-?>
+$EM_CONF[$_EXTKEY] = [
+    'title' => 'News event',
+    'description' => 'Event extension based on the versatile news system. Supplies additional event functionality to news records.',
+    'category' => 'plugin',
+    'state' => 'stable',
+    'uploadfolder' => 0,
+    'createDirs' => '',
+    'clearCacheOnLoad' => 0,
+    'author' => 'ROQUIN B.V., Oliver Eglseder',
+    'author_email' => 'extensions@roquin.nl, oliver.eglseder@in2code.de',
+    'author_company' => 'ROQUIN B.V., in2code GmbH',
+    'version' => '4.0.0-dev',
+    'constraints' => [
+        'depends' => [
+            'typo3' => '7.6.11-8.7.99',
+            'news' => '5.0.0-6.0.99',
+        ],
+        'conflicts' => [],
+        'suggests' => [],
+    ],
+];

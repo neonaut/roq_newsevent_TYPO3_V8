@@ -1,4 +1,9 @@
 <?php
+namespace ROQUIN\RoqNewsevent\ViewHelpers;
+
+use GeorgRinger\News\ViewHelpers\LinkViewHelper as NewsLinkViewHelper;
+use ROQUIN\RoqNewsevent\Domain\Model\Event;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
  * Copyright (c) 2012, ROQUIN B.V. (C), http://www.roquin.nl
@@ -7,21 +12,22 @@
  * @file:           EventLinkViewHelper.php
  * @description:    ViewHelper to render proper links for event detail view
  */
-
-class Tx_RoqNewsevent_ViewHelpers_LinkViewHelper extends \GeorgRinger\News\ViewHelpers\LinkViewHelper {
-
+class LinkViewHelper extends NewsLinkViewHelper
+{
     /**
      * Render link to news item or internal/external pages
      *
      * @return string link
      */
-    public function render() {
+    public function render()
+    {
+        /** @var Event $newsItem */
         $newsItem = $this->arguments['newsItem'];
         $settings = $this->arguments['settings'];
         $uriOnly = $this->arguments['uriOnly'];
         $configuration = $this->arguments['configuration'];
 
-        if(!$newsItem->getIsEvent()) {
+        if (!$newsItem->getIsEvent()) {
             return parent::render();
         }
 
@@ -41,18 +47,17 @@ class Tx_RoqNewsevent_ViewHelpers_LinkViewHelper extends \GeorgRinger\News\ViewH
                 break;
             // normal news record
             default:
-
                 $tsSettings['link']['skipControllerAndAction'] = 1;
                 $configuration['additionalParams'] .= '&tx_news_pi1[controller]=Event&tx_news_pi1[action]=eventDetail';
 
-                if($settings['event']['detailPid']) {
+                if ($settings['event']['detailPid']) {
                     $tsSettings['defaultDetailPid'] = $settings['event']['detailPid'];
                     $tsSettings['detailPidDetermination'] = 'default';
                 }
                 $configuration = $this->getLinkToNewsItem($newsItem, $tsSettings, $configuration);
         }
         if (isset($tsSettings['link']['typesOpeningInNewWindow'])) {
-            if (\TYPO3\CMS\Core\Utility\GeneralUtility::inList($tsSettings['link']['typesOpeningInNewWindow'], $newsType)) {
+            if (GeneralUtility::inList($tsSettings['link']['typesOpeningInNewWindow'], $newsType)) {
                 $this->tag->addAttribute('target', '_blank');
             }
         }

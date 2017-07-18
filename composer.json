@@ -8,8 +8,8 @@
     "georgringer/news": "^5.0 || ^6.0"
   },
   "autoload": {
-    "classmap": [
-      "Classes"
-    ]
+    "psr-4": {
+      "ROQUIN\\RoqNewsevent\\": "Classes"
+    }
   }
 }
