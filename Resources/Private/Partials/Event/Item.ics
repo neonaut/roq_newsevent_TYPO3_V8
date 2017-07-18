@@ -1,4 +1,4 @@
-{namespace n=Tx_News_ViewHelpers}
+{namespace n=GeorgRinger\News\ViewHelpers}
 {namespace e=Tx_RoqNewsevent_ViewHelpers}
 
 BEGIN:VEVENT
