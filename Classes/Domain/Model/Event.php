@@ -47,28 +47,14 @@ class Event extends News
      * @var \DateTime
      * @validate NotEmpty
      */
-    protected $eventStartdate;
-
-    /**
-     * Event start time
-     *
-     * @var \DateTime
-     */
-    protected $eventStarttime;
+    protected $eventStart;
 
     /**
      * Event end date
      *
      * @var \DateTime
      */
-    protected $eventEnddate;
-
-    /**
-     * Event end time
-     *
-     * @var \DateTime
-     */
-    protected $eventEndtime;
+    protected $eventEnd;
 
     /**
      * Even location (City, County)
@@ -110,87 +96,35 @@ class Event extends News
     }
 
     /**
-     * Returns the eventStartdate
-     *
-     * @return \DateTime $eventStartdate
+     * @return \DateTime
      */
-    public function getEventStartdate()
+    public function getEventStart()
     {
-        return $this->eventStartdate;
+        return $this->eventStart;
     }
 
     /**
-     * Sets the eventStartdate
-     *
-     * @param \DateTime $eventStartdate
-     * @return void
+     * @param \DateTime $eventStart
      */
-    public function setEventStartdate($eventStartdate)
+    public function setEventStart($eventStart)
     {
-        $this->eventStartdate = $eventStartdate;
+        $this->eventStart = $eventStart;
     }
 
     /**
-     * Returns the eventStarttime
-     *
-     * @return \DateTime $eventStarttime
+     * @return \DateTime
      */
-    public function getEventStarttime()
+    public function getEventEnd()
     {
-        return $this->eventStarttime;
+        return $this->eventEnd;
     }
 
     /**
-     * Sets the eventStarttime
-     *
-     * @param \DateTime $eventStarttime
-     * @return void
+     * @param \DateTime $eventEnd
      */
-    public function setEventStarttime($eventStarttime)
+    public function setEventEnd($eventEnd)
     {
-        $this->eventStarttime = $eventStarttime;
-    }
-
-    /**
-     * Returns the eventEnddate
-     *
-     * @return \DateTime $eventEnddate
-     */
-    public function getEventEnddate()
-    {
-        return $this->eventEnddate;
-    }
-
-    /**
-     * Sets the eventEnddate
-     *
-     * @param \DateTime $eventEnddate
-     * @return void
-     */
-    public function setEventEnddate($eventEnddate)
-    {
-        $this->eventEnddate = $eventEnddate;
-    }
-
-    /**
-     * Returns the eventEndtime
-     *
-     * @return \DateTime $eventEndtime
-     */
-    public function getEventEndtime()
-    {
-        return $this->eventEndtime;
-    }
-
-    /**
-     * Sets the eventEndtime
-     *
-     * @param \DateTime $eventEndtime
-     * @return void
-     */
-    public function setEventEndtime($eventEndtime)
-    {
-        $this->eventEndtime = $eventEndtime;
+        $this->eventEnd = $eventEnd;
     }
 
     /**
@@ -215,32 +149,32 @@ class Event extends News
     }
 
     /**
-     * Get year of eventStartdate
+     * Get year of event start
      *
      * @return integer
      */
     public function getYearOfEventStartdate()
     {
-        return $this->getEventStartdate()->format('Y');
+        return $this->getEventStart()->format('Y');
     }
 
     /**
-     * Get month of eventStartdate
+     * Get month of event start
      *
      * @return integer
      */
     public function getMonthOfEventStartdate()
     {
-        return $this->getEventStartdate()->format('m');
+        return $this->getEventStart()->format('m');
     }
 
     /**
-     * Get day of eventStartdate
+     * Get day of event start
      *
      * @return integer
      */
     public function getDayOfEventStartdate()
     {
-        return $this->getEventStartdate()->format('d');
+        return $this->getEventStart()->format('d');
     }
 }

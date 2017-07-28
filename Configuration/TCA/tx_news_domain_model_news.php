@@ -12,43 +12,21 @@ $tmp_roq_newsevent_columns = [
             'default' => 0,
         ],
     ],
-    'tx_roqnewsevent_startdate' => [
+    'tx_roqnewsevent_start' => [
         'exclude' => 0,
-        'label' => 'LLL:EXT:roq_newsevent/Resources/Private/Language/locallang_db.xml:tx_roqnewsevent_startdate',
+        'label' => 'LLL:EXT:roq_newsevent/Resources/Private/Language/locallang_db.xml:tx_roqnewsevent_start',
         'config' => [
             'type' => 'input',
-            'size' => 7,
-            'eval' => 'date',
+            'eval' => 'datetime',
             'checkbox' => 1,
         ],
     ],
-    'tx_roqnewsevent_starttime' => [
+    'tx_roqnewsevent_end' => [
         'exclude' => 0,
-        'label' => 'LLL:EXT:roq_newsevent/Resources/Private/Language/locallang_db.xml:tx_roqnewsevent_starttime',
+        'label' => 'LLL:EXT:roq_newsevent/Resources/Private/Language/locallang_db.xml:tx_roqnewsevent_end',
         'config' => [
             'type' => 'input',
-            'size' => 4,
-            'eval' => 'time',
-            'checkbox' => 1,
-        ],
-    ],
-    'tx_roqnewsevent_enddate' => [
-        'exclude' => 0,
-        'label' => 'LLL:EXT:roq_newsevent/Resources/Private/Language/locallang_db.xml:tx_roqnewsevent_enddate',
-        'config' => [
-            'type' => 'input',
-            'size' => 7,
-            'eval' => 'date',
-            'checkbox' => 1,
-        ],
-    ],
-    'tx_roqnewsevent_endtime' => [
-        'exclude' => 0,
-        'label' => 'LLL:EXT:roq_newsevent/Resources/Private/Language/locallang_db.xml:tx_roqnewsevent_endtime',
-        'config' => [
-            'type' => 'input',
-            'size' => 4,
-            'eval' => 'time',
+            'eval' => 'datetime',
             'checkbox' => 1,
         ],
     ],
@@ -70,5 +48,5 @@ $tmp_roq_newsevent_columns = [
 
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addToAllTCAtypes(
     'tx_news_domain_model_news',
-    ',--div--;LLL:EXT:roq_newsevent/Resources/Private/Language/locallang_db.xml:tx_roqnewsevent_domain_model_event,tx_roqnewsevent_is_event, tx_roqnewsevent_startdate, tx_roqnewsevent_starttime, tx_roqnewsevent_enddate, tx_roqnewsevent_endtime, tx_roqnewsevent_location'
+    ',--div--;LLL:EXT:roq_newsevent/Resources/Private/Language/locallang_db.xml:tx_roqnewsevent_domain_model_event,tx_roqnewsevent_is_event, tx_roqnewsevent_start, tx_roqnewsevent_end, tx_roqnewsevent_location'
 );

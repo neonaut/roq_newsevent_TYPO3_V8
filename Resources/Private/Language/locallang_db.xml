@@ -8,8 +8,10 @@
 		<languageKey index="default" type="array">
 			<label index="tx_roqnewsevent_domain_model_event">Event</label>
             <label index="tx_roqnewsevent_is_event">Is event</label>
+			<label index="tx_roqnewsevent_start">Start</label>
 			<label index="tx_roqnewsevent_startdate">Start date</label>
 			<label index="tx_roqnewsevent_starttime">Start time</label>
+			<label index="tx_roqnewsevent_end">End</label>
 			<label index="tx_roqnewsevent_enddate">End date</label>
 			<label index="tx_roqnewsevent_endtime">End time</label>
 			<label index="tx_roqnewsevent_location">Location</label>
@@ -19,8 +21,10 @@
         <languageKey index="nl" type="array">
             <label index="tx_roqnewsevent_domain_model_event">Evenement</label>
             <label index="tx_roqnewsevent_is_event">Is evenement</label>
+			<label index="tx_roqnewsevent_start">Start</label>
             <label index="tx_roqnewsevent_startdate">Startdatum</label>
             <label index="tx_roqnewsevent_starttime">Starttijd</label>
+			<label index="tx_roqnewsevent_end">End</label>
             <label index="tx_roqnewsevent_enddate">Einddatum</label>
             <label index="tx_roqnewsevent_endtime">Eindtijd</label>
             <label index="tx_roqnewsevent_location">Locatie</label>
@@ -30,8 +34,10 @@
         <languageKey index="de" type="array">
             <label index="tx_roqnewsevent_domain_model_event">Veranstaltungs-Infos</label>
             <label index="tx_roqnewsevent_is_event">Ist eine Veranstaltung</label>
+			<label index="tx_roqnewsevent_start">Start</label>
             <label index="tx_roqnewsevent_startdate">Startdatum</label>
             <label index="tx_roqnewsevent_starttime">Startzeit</label>
+			<label index="tx_roqnewsevent_end">End</label>
             <label index="tx_roqnewsevent_enddate">Enddatum</label>
             <label index="tx_roqnewsevent_endtime">Endzeit</label>
             <label index="tx_roqnewsevent_location">Ort</label>
@@ -41,8 +47,10 @@
         <languageKey index="fr" type="array">
             <label index="tx_roqnewsevent_domain_model_event">Évènement</label>
             <label index="tx_roqnewsevent_is_event">Ceci est un évènement</label>
+            <label index="tx_roqnewsevent_start">Début</label>
             <label index="tx_roqnewsevent_startdate">Date de début</label>
             <label index="tx_roqnewsevent_starttime">Horaire de début</label>
+			<label index="tx_roqnewsevent_end">Fin</label>
             <label index="tx_roqnewsevent_enddate">Date de fin</label>
             <label index="tx_roqnewsevent_endtime">Horaire de fin</label>
             <label index="tx_roqnewsevent_location">Emplacement</label>
@@ -52,8 +60,10 @@
         <languageKey index="dk" type="array">
             <label index="tx_roqnewsevent_domain_model_event">Kursus</label>
             <label index="tx_roqnewsevent_is_event">Er et kursus</label>
+            <label index="tx_roqnewsevent_start">Start</label>
             <label index="tx_roqnewsevent_startdate">Startdato</label>
             <label index="tx_roqnewsevent_starttime">Starttid</label>
+            <label index="tx_roqnewsevent_end">Slut</label>
             <label index="tx_roqnewsevent_enddate">Slutdato</label>
             <label index="tx_roqnewsevent_endtime">Sluttid</label>
             <label index="tx_roqnewsevent_location">Lokation</label>

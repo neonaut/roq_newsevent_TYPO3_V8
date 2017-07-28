@@ -14,10 +14,8 @@ plugin.tx_news {
 	}
 
 	view {
-		event {
-			partialRootPath = {$plugin.roq_newsevent.view.partialRootPath}
-			templateRootPath = {$plugin.roq_newsevent.view.templateRootPath}
-		}
+		partialRootPaths.50 = {$plugin.roq_newsevent.view.partialRootPath}
+		templateRootPaths.50 = {$plugin.roq_newsevent.view.templateRootPath}
 	}
 
 	settings {

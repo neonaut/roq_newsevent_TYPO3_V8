@@ -96,27 +96,61 @@ class EventController extends NewsController
             ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK
         );
 
-        if (isset($extbaseFrameworkConfiguration['view']['event']['templateRootPath'])
-            && strlen($extbaseFrameworkConfiguration['view']['event']['templateRootPath']) > 0
-            && method_exists($view, 'setTemplateRootPath')) {
-            $view->setTemplateRootPath(
-                GeneralUtility::getFileAbsFileName($extbaseFrameworkConfiguration['view']['event']['templateRootPath'])
-            );
+        // set TemplateRootPaths
+        $viewFunctionName = 'setTemplateRootPaths';
+        if (method_exists($view, $viewFunctionName)) {
+            $setting = 'templateRootPaths';
+            $parameter = $this->getEventViewProperty($extbaseFrameworkConfiguration, $setting);
+            // no need to bother if there is nothing to set
+            if ($parameter) {
+                $view->$viewFunctionName($parameter);
+            }
         }
-        if (isset($extbaseFrameworkConfiguration['view']['event']['layoutRootPath'])
-            && strlen($extbaseFrameworkConfiguration['view']['event']['layoutRootPath']) > 0
-            && method_exists($view, 'setLayoutRootPath')) {
-            $view->setLayoutRootPath(
-                GeneralUtility::getFileAbsFileName($extbaseFrameworkConfiguration['view']['event']['layoutRootPath'])
-            );
+
+        // set LayoutRootPaths
+        $viewFunctionName = 'setLayoutRootPaths';
+        if (method_exists($view, $viewFunctionName)) {
+            $setting = 'layoutRootPaths';
+            $parameter = $this->getEventViewProperty($extbaseFrameworkConfiguration, $setting);
+            // no need to bother if there is nothing to set
+            if ($parameter) {
+                $view->$viewFunctionName($parameter);
+            }
         }
-        if (isset($extbaseFrameworkConfiguration['view']['event']['partialRootPath'])
-            && strlen($extbaseFrameworkConfiguration['view']['event']['partialRootPath']) > 0
-            && method_exists($view, 'setPartialRootPath')) {
-            $view->setPartialRootPath(
-                GeneralUtility::getFileAbsFileName($extbaseFrameworkConfiguration['view']['event']['partialRootPath'])
-            );
+
+        // set PartialRootPaths
+        $viewFunctionName = 'setPartialRootPaths';
+        if (method_exists($view, $viewFunctionName)) {
+            $setting = 'partialRootPaths';
+            $parameter = $this->getEventViewProperty($extbaseFrameworkConfiguration, $setting);
+            // no need to bother if there is nothing to set
+            if ($parameter) {
+                $view->$viewFunctionName($parameter);
+            }
         }
+    }
+
+
+    /**
+     * Handles the path resolving for *rootPath(s)
+     *
+     * numerical arrays get ordered by key ascending
+     *
+     * @param array $extbaseFrameworkConfiguration
+     * @param string $setting parameter name from TypoScript
+     *
+     * @return array
+     */
+    protected function getEventViewProperty($extbaseFrameworkConfiguration, $setting)
+    {
+        $values = [];
+        if (!empty($extbaseFrameworkConfiguration['view']['event'][$setting])
+            && is_array($extbaseFrameworkConfiguration['view']['event'][$setting])
+        ) {
+            $values = $extbaseFrameworkConfiguration['view']['event'][$setting];
+        }
+
+        return $values;
     }
 
     /**

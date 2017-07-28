@@ -111,7 +111,6 @@ class IfViewHelper extends AbstractConditionViewHelper
     public function initializeArguments()
     {
         parent::initializeArguments();
-        $this->registerArgument('condition', 'mixed', 'View helper condition expression, evaluated', true);
     }
 
     /**
