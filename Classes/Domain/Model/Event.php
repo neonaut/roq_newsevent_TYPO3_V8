@@ -104,6 +104,35 @@ class Event extends News
     }
 
     /**
+     * @return \DateTime
+     */
+    public function getEventStarttime()
+    {
+        if (null === $this->eventStart) {
+            return null;
+        }
+        $dateTime = clone $this->eventStart;
+        if ($this->dateTimeHasTimePortion($dateTime)) {
+            $dateTime->setDate(0, 0, 0);
+            return $dateTime;
+        }
+        return null;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getEventStartdate()
+    {
+        if (null === $this->eventStart) {
+            return null;
+        }
+        $dateTime = clone $this->eventStart;
+        $dateTime->setTime(0, 0, 0);
+        return $dateTime;
+    }
+
+    /**
      * @param \DateTime $eventStart
      */
     public function setEventStart($eventStart)
@@ -117,6 +146,35 @@ class Event extends News
     public function getEventEnd()
     {
         return $this->eventEnd;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getEventEndtime()
+    {
+        if (null === $this->eventEnd) {
+            return null;
+        }
+        $dateTime = clone $this->eventStart;
+        if ($this->dateTimeHasTimePortion($dateTime)) {
+            $dateTime->setDate(0, 0, 0);
+            return $dateTime;
+        }
+        return null;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getEventEnddate()
+    {
+        if (null === $this->eventEnd) {
+            return null;
+        }
+        $dateTime = clone $this->eventEnd;
+        $dateTime->setTime(0, 0, 0);
+        return $dateTime;
     }
 
     /**
@@ -176,5 +234,14 @@ class Event extends News
     public function getDayOfEventStartdate()
     {
         return $this->getEventStart()->format('d');
+    }
+
+    /**
+     * @param $dateTime
+     * @return bool
+     */
+    protected function dateTimeHasTimePortion($dateTime): bool
+    {
+        return !empty(trim($dateTime->format('His'), '0'));
     }
 }
