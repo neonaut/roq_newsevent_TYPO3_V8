@@ -209,7 +209,7 @@ class EventRepository extends \GeorgRinger\News\Domain\Repository\NewsRepository
         // the event must have an event start date
         $constraints[] = $query->logicalAnd(
             $query->logicalNot(
-                $query->equals('tx_roqnewsevent_startdate', 0)
+                $query->equals('tx_roqnewsevent_start', 0)
             )
         );
 
