@@ -1,8 +1,5 @@
-# roq_newsevent
-Mirror from git.typo3.org
+# roq_newsevent - in2code version
 
-TYPO3 7.6 & News 5.3 compatible version
-
-Todo:
-* Adapt namespaces in fluid templates
-* Adapt Page module hook in ext_localconf.php
+* Updated to be compatible with TYPO3 v8
+* Is not necessarily compatible with older versions
+* If you update from an older version do not forget to run the update script (Extension Manager)

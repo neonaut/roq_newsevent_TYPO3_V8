@@ -11,5 +11,10 @@
     "psr-4": {
       "ROQUIN\\RoqNewsevent\\": "Classes"
     }
+  },
+  "extra": {
+    "branch-alias": {
+      "dev-master": "4.0.x-dev"
+    }
   }
 }
