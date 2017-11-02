@@ -20,14 +20,14 @@ plugin.tx_news {
 
 	settings {
 		event {
-			orderByAllowed = tx_roqnewsevent_startdate,tx_roqnewsevent_starttime
-			orderBy = tx_roqnewsevent_startdate ASC, tx_roqnewsevent_starttime ASC
+			orderByAllowed = tx_roqnewsevent_start
+			orderBy = tx_roqnewsevent_start ASC
 
 			archived {
-				orderBy = tx_roqnewsevent_startdate DESC, tx_roqnewsevent_starttime DESC
+				orderBy = tx_roqnewsevent_start DESC
 			}
 
-			dateField = eventStartdate
+			dateField = eventStart
 		}
 	}
 }

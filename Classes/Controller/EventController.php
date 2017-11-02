@@ -43,7 +43,7 @@ class EventController extends NewsController
         if (isset($settings['event']['dateField'])) {
             $settings['dateField'] = $settings['event']['dateField'];
         } else {
-            $settings['dateField'] = 'eventStartdate';
+            $settings['dateField'] = 'eventStart';
         }
 
         return $settings;
@@ -173,7 +173,7 @@ class EventController extends NewsController
             $demand->setOrderByAllowed($orderByAllowed . str_replace(' ', '', $settings['event']['orderByAllowed']));
         } else {
             // default orderByAllowed list
-            $demand->setOrderByAllowed($orderByAllowed . 'tx_roqnewsevent_startdate,tx_roqnewsevent_starttime');
+            $demand->setOrderByAllowed($orderByAllowed . 'tx_roqnewsevent_start');
         }
 
         if ($demand->getArchiveRestriction() == 'archived') {
@@ -181,14 +181,14 @@ class EventController extends NewsController
                 $demand->setOrder($settings['event']['archived']['orderBy']);
             } else {
                 // default ordering for archived events
-                $demand->setOrder('tx_roqnewsevent_startdate DESC, tx_roqnewsevent_starttime DESC');
+                $demand->setOrder('tx_roqnewsevent_start DESC');
             }
         } else {
             if ($settings['event']['orderBy']) {
                 $demand->setOrder($settings['event']['orderBy']);
             } else {
                 // default ordering for active events
-                $demand->setOrder('tx_roqnewsevent_startdate ASC, tx_roqnewsevent_starttime ASC');
+                $demand->setOrder('tx_roqnewsevent_start ASC');
             }
         }
 
@@ -217,7 +217,7 @@ class EventController extends NewsController
         $eventRecords = $this->eventRepository->findDemanded($demand);
 
         if (!$dateField = $this->settings['dateField']) {
-            $dateField = 'eventStartdate';
+            $dateField = 'eventStart';
         }
 
         $this->view->assignMultiple(
