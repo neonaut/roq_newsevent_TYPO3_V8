@@ -56,7 +56,24 @@ class ext_update extends BaseScriptClass
             while ($row = $selectStatement->fetch_assoc()) {
                 $uid = (int)$row['uid'];
                 $row['tx_roqnewsevent_start'] = $row['tx_roqnewsevent_startdate'] + $row['tx_roqnewsevent_starttime'];
+
+                // HF-MOD: Start
+
+                if( $row['tx_roqnewsevent_enddate'] > 0 && $row['tx_roqnewsevent_endtime'] >= 0) {
                 $row['tx_roqnewsevent_end'] = $row['tx_roqnewsevent_enddate'] + $row['tx_roqnewsevent_endtime'];
+                }
+
+                if( $row['tx_roqnewsevent_enddate'] == 0 && $row['tx_roqnewsevent_endtime'] > 0) {
+                    $row['tx_roqnewsevent_end'] = $row['tx_roqnewsevent_startdate'] + $row['tx_roqnewsevent_endtime'];
+                }
+
+                if( $row['tx_roqnewsevent_enddate'] == 0 && $row['tx_roqnewsevent_endtime'] == 0) {
+                    $row['tx_roqnewsevent_end'] = 0;
+                }
+
+                // HF-MOD: End
+
+
                 $this->getDatabase()->exec_UPDATEquery('tx_news_domain_model_news', 'uid=' . $uid, $row);
             }
             return sprintf('Update of %d rows successful', $selectStatement->num_rows);

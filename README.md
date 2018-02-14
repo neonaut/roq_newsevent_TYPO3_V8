@@ -1,5 +1,4 @@
-# roq_newsevent - in2code version
+# roq_newsevent - hausformat version
 
-* Updated to be compatible with TYPO3 v8
-* Is not necessarily compatible with older versions
+* Update script extended to fix a problem with start- and enddate as well as start- and end time
 * If you update from an older version do not forget to run the update script (Extension Manager)
