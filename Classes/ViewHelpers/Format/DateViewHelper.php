@@ -50,10 +50,9 @@ class DateViewHelper extends AbstractViewHelper
         if ($currentDate) {
             if ($strftime) {
                 return strftime($format, $GLOBALS['EXEC_TIME']);
-            } else {
+            }
                 return date($format, $GLOBALS['EXEC_TIME']);
             }
-        }
 
         if ($date === null) {
             $date = $this->renderChildren();
@@ -74,8 +73,7 @@ class DateViewHelper extends AbstractViewHelper
 
         if ($strftime) {
             return strftime($format, $date->format('U'));
-        } else {
+        }
             return date($format, $date->format('U'));
         }
     }
-}
