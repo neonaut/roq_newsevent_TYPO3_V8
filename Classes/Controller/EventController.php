@@ -164,7 +164,7 @@ class EventController extends NewsController
         $demand = parent::createDemandObjectFromSettings($settings);
         $orderByAllowed = $demand->getOrderByAllowed();
 
-        if (sizeof($orderByAllowed) > 0) {
+        if (strlen($orderByAllowed) > 0) {
             $orderByAllowed .= ',';
         }
 
