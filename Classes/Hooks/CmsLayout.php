@@ -92,6 +92,18 @@ class CmsLayout extends PageLayoutView
                         $this->getDetailPidSetting();
                         $this->getListPidSetting();
                         break;
+                    case 'news_eventselectedlist':
+                        $this->getStartingPoint();
+                        $this->getSelectedListSetting();
+                        $this->getTimeRestrictionSetting();
+                        $this->getTopNewsRestrictionSetting();
+                        $this->getOrderSettings();
+                        $this->getCategorySettings();
+                        $this->getArchiveSettings();
+                        $this->getOffsetLimitSettings();
+                        $this->getDetailPidSetting();
+                        $this->getListPidSetting();
+                        break;
                     case 'news_eventdetail':
                         $this->getSingleNewsSettings();
                         $this->getDetailPidSetting();

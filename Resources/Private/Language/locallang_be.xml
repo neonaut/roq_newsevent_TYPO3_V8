@@ -6,17 +6,17 @@
 	</meta>
 	<data type="array">
 		<languageKey index="default" type="array">
-            <label index="flexforms_general.mode.news_eventlist">Event List View</label>
-            <label index="flexforms_general.mode.news_eventdetail">Event Single View</label>
-            <label index="flexforms_general.mode.news_eventdatemenu">Event Date Menu</label>
+			<label index="flexforms_general.mode.news_eventlist">Event List View</label>
+			<label index="flexforms_general.mode.news_eventselectedlist">Event Selected Items View</label>
+			<label index="flexforms_general.mode.news_eventdetail">Event Single View</label>
+			<label index="flexforms_general.mode.news_eventdatemenu">Event Date Menu</label>
 		</languageKey>
 
-        <languageKey index="de" type="array">
-            <label index="flexforms_general.mode.news_eventlist">Veranstaltungen Listenansicht</label>
-            <label index="flexforms_general.mode.news_eventdetail">Veranstaltungen Einzelansicht</label>
-            <label index="flexforms_general.mode.news_eventdatemenu">Veranstaltungen Datumsmenü</label>
-        </languageKey>
-
-
+		<languageKey index="de" type="array">
+			<label index="flexforms_general.mode.news_eventlist">Veranstaltungen Listenansicht</label>
+			<label index="flexforms_general.mode.news_eventselectedlist">Veranstaltungen Ansicht Ausgewählter Datensätze</label>
+			<label index="flexforms_general.mode.news_eventdetail">Veranstaltungen Einzelansicht</label>
+			<label index="flexforms_general.mode.news_eventdatemenu">Veranstaltungen Datumsmenü</label>
+		</languageKey>
 	</data>
 </T3locallang>

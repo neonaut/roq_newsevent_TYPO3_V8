@@ -251,6 +251,15 @@ class EventController extends NewsController
     }
 
     /**
+     * Output a selected list view of news
+     */
+    public function eventSelectedListAction()
+    {
+        $this->eventHook(__METHOD__, __CLASS__);
+        $this->selectedListAction();
+    }
+
+    /**
      * Single view of a news event record
      *
      * @param Event|News $news news item
