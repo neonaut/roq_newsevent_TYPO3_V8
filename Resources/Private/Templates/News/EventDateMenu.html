@@ -1,4 +1,6 @@
-{namespace n=GeorgRinger\News\ViewHelpers}
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+	  data-namespace-typo3-fluid="true">
+
 <f:layout name="General" />
 <!--
 	=====================
@@ -8,25 +10,31 @@
 <f:section name="content">
 	<div class="news-menu-view">
 		<ul>
-		<f:groupedFor each="{events}" as="newsByYear" groupBy="yearOf{dateField}" groupKey="year">
-			<li>{year}
-				<ul>
-				<f:groupedFor each="{newsByYear}" as="newsByMonth" groupBy="monthOf{dateField}" groupKey="month">
-						<f:if condition="{0:year, 1:month} == {0:overwriteDemand.year, 1:overwriteDemand.month}">
-							<f:then>
-								<li class="item itemactive">
-							</f:then>
-							<f:else>
-								<li class="item">
-							</f:else>
-						</f:if>
-						<f:link.action pageUid="{listPid}" arguments="{overwriteDemand:{year: year, month: month}}" controller="Event"><f:translate key="month.{month}" /> {year}</f:link.action>
-						(<f:count subject="{newsByMonth}" /> <f:translate key="{f:if(condition: '{f:count(subject: newsByMonth)} == 1', then: 'entry', else: 'entries')}" />)
-					</li>
-				</f:groupedFor>
-				</ul>
-			</li>
-		</f:groupedFor>
+			<f:groupedFor each="{events}" as="newsByYear" groupBy="yearOf{dateField}" groupKey="year">
+				<li>
+					{year}
+
+					<ul>
+						<f:groupedFor each="{newsByYear}" as="newsByMonth" groupBy="monthOf{dateField}" groupKey="month">
+							<li class="item {f:if(condition: '{0: year, 1: month} == {0: overwriteDemand.year, 1: overwriteDemand.month}', then: ' itemactive')}">
+								<f:link.action pageUid="{listPid}"
+											   arguments="{overwriteDemand:{year: year, month: month}}"
+											   controller="Event">
+									<f:translate key="month.{month}" />
+									{year}
+								</f:link.action>
+
+								(
+								<f:count subject="{newsByMonth}" />
+								<f:translate
+										key="{f:if(condition: '{f:count(subject: newsByMonth)} == 1', then: 'entry', else: 'entries')}" />
+								)
+							</li>
+						</f:groupedFor>
+					</ul>
+				</li>
+			</f:groupedFor>
 		</ul>
 	</div>
 </f:section>
+</html>

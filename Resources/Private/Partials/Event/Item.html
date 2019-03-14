@@ -1,5 +1,6 @@
-{namespace n=GeorgRinger\News\ViewHelpers}
-{namespace e=ROQUIN\RoqNewsevent\ViewHelpers}
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+	  xmlns:e="http://typo3.org/ns/ROQUIN/RoqNewsevent/ViewHelpers"
+	  data-namespace-typo3-fluid="true">
 <!--
 	=====================
 		Partials/Event/Item.html
@@ -49,8 +50,10 @@
             </f:else>
         </f:if>
     </f:else>
-
 </e:if>
+
 <f:if condition="{newsItem.eventLocation}">
     <br><strong><e:translate key="event_location" />:</strong> {newsItem.eventLocation}
 </f:if>
+
+</html>

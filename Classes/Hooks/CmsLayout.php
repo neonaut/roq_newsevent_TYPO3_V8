@@ -54,7 +54,7 @@ class CmsLayout extends PageLayoutView
     {
         $result = $actionTranslationKey = '';
 
-        if ($params['row']['list_type'] == self::KEY . '_pi1') {
+        if ($params['row']['list_type'] === self::KEY . '_pi1') {
             $this->flexformData = GeneralUtility::xml2array($params['row']['pi_flexform']);
 
             // if flexform data is found
@@ -73,7 +73,7 @@ class CmsLayout extends PageLayoutView
                 $result = $GLOBALS['LANG']->sL(self::LLPATH . 'flexforms_general.mode.not_configured');
             }
 
-            if (is_array($this->flexformData)) {
+            if (\is_array($this->flexformData)) {
                 switch ($actionTranslationKey) {
                     case 'news_list':
                     case 'news_detail':

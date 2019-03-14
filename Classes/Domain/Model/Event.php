@@ -1,4 +1,5 @@
 <?php
+
 namespace ROQUIN\RoqNewsevent\Domain\Model;
 
 /***************************************************************
@@ -237,7 +238,7 @@ class Event extends News
     }
 
     /**
-     * @param $dateTime
+     * @param \DateTime $dateTime
      * @return bool
      */
     protected function dateTimeHasTimePortion($dateTime): bool

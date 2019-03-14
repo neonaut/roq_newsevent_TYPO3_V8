@@ -1,11 +1,14 @@
-{namespace n=GeorgRinger\News\ViewHelpers}
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+	  xmlns:n="http://typo3.org/ns/GeorgRinger/News/ViewHelpers"
+	  data-namespace-typo3-fluid="true">
 
 <div class="mediaelement">
 	<div class="mediaelement-video">
-		<n:mediaFactory classes="{settings.interfaces.media.video}" element="{mediaElement}" width="{settings.detail.media.video.width}"
-			height="{settings.detail.media.video.height}" />
+		<n:mediaFactory classes="{settings.interfaces.media.video}"
+						element="{mediaElement}"
+						width="{settings.detail.media.video.width}"
+						height="{settings.detail.media.video.height}" />
 	</div>
-
 
 	<f:if condition="{mediaElement.caption}">
 		<div class="medialement-alternative-content">
@@ -15,3 +18,5 @@
 		</div>
 	</f:if>
 </div>
+
+</html>

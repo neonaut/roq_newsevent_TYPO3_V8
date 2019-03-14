@@ -8,9 +8,7 @@ BEGIN:VCALENDAR<e:format.trim replaceDoubleSpaces="FALSE" useWindowsLineEndings=
 
     <f:if condition="{news}">
         <f:for each="{news}" as="newsItem">
-
            <f:render partial="Event/Item" arguments="{newsItem: newsItem, settings: settings}"/>
-
         </f:for>
     </f:if>
 END:VCALENDAR</e:format.trim>

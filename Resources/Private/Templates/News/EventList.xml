@@ -23,13 +23,13 @@
 						<guid>news-{newsItem.uid}</guid>
 						<pubDate><e:format.date format="%a, %d %b %Y %T %z" currentDate="1" strftime="1">{newsItem.datetime}</e:format.date></pubDate>
 						<title><n:format.hsc>{newsItem.title}</n:format.hsc></title>
-						<link><e:link newsItem="{newsItem}" settings="{settings}" configuration="{returnLast:'url'}" hsc="TRUE"></e:link></link>
+						<link><e:link newsItem="{newsItem}" settings="{settings}" configuration="{returnLast: 'url'}" hsc="TRUE"></e:link></link>
 						<description>
-                            <e:format.trim trimTabs="FALSE">
-                                <n:format.striptags><f:render partial="Event/Item.html" arguments="{newsItem: newsItem, settings:settings}"/></n:format.striptags>
-                                <n:format.hsc><n:format.striptags>{newsItem.teaser}</n:format.striptags></n:format.hsc>
-                            </e:format.trim>
-                        </description>
+							<e:format.trim trimTabs="FALSE">
+								<n:format.striptags><f:render partial="Event/Item.html" arguments="{newsItem: newsItem, settings: settings}"/></n:format.striptags>
+								<n:format.hsc><n:format.striptags>{newsItem.teaser}</n:format.striptags></n:format.hsc>
+							</e:format.trim>
+						</description>
 					</item>
 				</f:for>
 			</f:if>
