@@ -1,11 +1,16 @@
 <?php
+
 namespace ROQUIN\RoqNewsevent\Controller;
 
 use GeorgRinger\News\Controller\NewsController;
 use GeorgRinger\News\Domain\Model\Dto\NewsDemand;
+use GeorgRinger\News\Domain\Model\News;
+use GeorgRinger\News\Domain\Repository\NewsRepository;
 use GeorgRinger\News\Utility\Page;
+use NN\NnAddress\Domain\Model\DemandInterface;
+use ROQUIN\RoqNewsevent\Domain\Dto\EventsDemand;
 use ROQUIN\RoqNewsevent\Domain\Model\Event;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
+use ROQUIN\RoqNewsevent\Domain\Repository\EventRepository;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 use TYPO3\CMS\Extbase\Mvc\View\ViewInterface;
 
@@ -21,32 +26,33 @@ use TYPO3\CMS\Extbase\Mvc\View\ViewInterface;
  * @package TYPO3
  * @subpackage roq_newsevent
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
+ *
+ * @property  array settings
  */
 class EventController extends NewsController
 {
-    /**
-     * eventRepository
-     *
-     * @var \ROQUIN\RoqNewsevent\Domain\Repository\EventRepository
-     * @inject
-     */
-    protected $eventRepository;
+    /** @var string $eventActionName */
+    protected $eventActionName;
+
+    /** @var string $eventClassName */
+    protected $eventClassName;
+
+    /** @var bool $eventIsEventAction */
+    private $eventIsEventAction;
 
     /**
-     * Initializes the settings
+     * Inject a event repository to enable DI
      *
-     * @param array $settings
-     * @return array $settings
+     * @param EventRepository $eventRepository
      */
-    protected function initializeSettings($settings)
+    public function injectEventRepository(EventRepository $eventRepository)
     {
-        if (isset($settings['event']['dateField'])) {
-            $settings['dateField'] = $settings['event']['dateField'];
-        } else {
-            $settings['dateField'] = 'eventStart';
-        }
+        $this->newsRepository = $eventRepository;
+    }
 
-        return $settings;
+    public function injectNewsRepository(NewsRepository $newsRepository)
+    {
+        // Do not use
     }
 
     /**
@@ -78,7 +84,7 @@ class EventController extends NewsController
 
             if (strpos($action, $controllerConfigurationAction) !== false) {
                 // the current controller configuration action matches with one of the event controller actions: set event view configuration
-                $this->setEventViewConfiguration($view);
+                $this->eventSetViewConfiguration($view);
             }
         }
     }
@@ -89,7 +95,7 @@ class EventController extends NewsController
      * @param ViewInterface $view
      * @return void
      */
-    protected function setEventViewConfiguration(ViewInterface $view)
+    protected function eventSetViewConfiguration(ViewInterface $view)
     {
         // Template Path Override
         $extbaseFrameworkConfiguration = $this->configurationManager->getConfiguration(
@@ -99,8 +105,7 @@ class EventController extends NewsController
         // set TemplateRootPaths
         $viewFunctionName = 'setTemplateRootPaths';
         if (method_exists($view, $viewFunctionName)) {
-            $setting = 'templateRootPaths';
-            $parameter = $this->getEventViewProperty($extbaseFrameworkConfiguration, $setting);
+            $parameter = $this->eventGetViewProperty($extbaseFrameworkConfiguration, 'templateRootPaths');
             // no need to bother if there is nothing to set
             if ($parameter) {
                 $view->$viewFunctionName($parameter);
@@ -110,8 +115,7 @@ class EventController extends NewsController
         // set LayoutRootPaths
         $viewFunctionName = 'setLayoutRootPaths';
         if (method_exists($view, $viewFunctionName)) {
-            $setting = 'layoutRootPaths';
-            $parameter = $this->getEventViewProperty($extbaseFrameworkConfiguration, $setting);
+            $parameter = $this->eventGetViewProperty($extbaseFrameworkConfiguration, 'layoutRootPaths');
             // no need to bother if there is nothing to set
             if ($parameter) {
                 $view->$viewFunctionName($parameter);
@@ -121,15 +125,13 @@ class EventController extends NewsController
         // set PartialRootPaths
         $viewFunctionName = 'setPartialRootPaths';
         if (method_exists($view, $viewFunctionName)) {
-            $setting = 'partialRootPaths';
-            $parameter = $this->getEventViewProperty($extbaseFrameworkConfiguration, $setting);
+            $parameter = $this->eventGetViewProperty($extbaseFrameworkConfiguration, 'partialRootPaths');
             // no need to bother if there is nothing to set
             if ($parameter) {
                 $view->$viewFunctionName($parameter);
             }
         }
     }
-
 
     /**
      * Handles the path resolving for *rootPath(s)
@@ -139,66 +141,77 @@ class EventController extends NewsController
      * @param array $extbaseFrameworkConfiguration
      * @param string $setting parameter name from TypoScript
      *
-     * @return array
+     * @return mixed
      */
-    protected function getEventViewProperty($extbaseFrameworkConfiguration, $setting)
+    protected function eventGetViewProperty(array $extbaseFrameworkConfiguration, string $setting)
     {
-        $values = [];
         if (!empty($extbaseFrameworkConfiguration['view']['event'][$setting])
             && is_array($extbaseFrameworkConfiguration['view']['event'][$setting])
         ) {
-            $values = $extbaseFrameworkConfiguration['view']['event'][$setting];
+            return $extbaseFrameworkConfiguration['view']['event'][$setting];
         }
 
-        return $values;
+        return [];
     }
 
     /**
-     * Create the demand object which define which records will get shown
-     *
      * @param array $settings
-     * @return NewsDemand
+     * @param string $class
+     * @return EventsDemand|NewsDemand|DemandInterface
      */
-    protected function eventCreateDemandObjectFromSettings($settings)
+    protected function createDemandObjectFromSettings($settings, $class = EventsDemand::class)
     {
-        $demand = parent::createDemandObjectFromSettings($settings);
-        $orderByAllowed = $demand->getOrderByAllowed();
+        $demand = parent::createDemandObjectFromSettings($settings, $class); // TODO: Change the autogenerated stub
 
-        if (strlen($orderByAllowed) > 0) {
-            $orderByAllowed .= ',';
-        }
+        if ($this->eventIsEventAction) {
+            $demand->eventIsEventAction = true;
+            $demand->eventActionName = $this->eventActionName;
+            $demand->eventClassName = $this->eventClassName;
 
-        // set ordering
-        if ($settings['event']['orderByAllowed']) {
-            $demand->setOrderByAllowed($orderByAllowed . str_replace(' ', '', $settings['event']['orderByAllowed']));
-        } else {
-            // default orderByAllowed list
-            $demand->setOrderByAllowed($orderByAllowed . 'tx_roqnewsevent_start');
-        }
+            $orderByAllowed = $demand->getOrderByAllowed();
 
-        if ($demand->getArchiveRestriction() == 'archived') {
-            if ($settings['event']['archived']['orderBy']) {
-                $demand->setOrder($settings['event']['archived']['orderBy']);
-            } else {
-                // default ordering for archived events
-                $demand->setOrder('tx_roqnewsevent_start DESC');
+            if ($orderByAllowed !== '') {
+                $orderByAllowed .= ',';
             }
-        } else {
-            if ($settings['event']['orderBy']) {
+
+            // set ordering
+            if ($settings['event']['orderByAllowed']) {
+                $demand->setOrderByAllowed($orderByAllowed . str_replace(' ', '', $settings['event']['orderByAllowed']));
+            } else {
+                // default orderByAllowed list
+                $demand->setOrderByAllowed($orderByAllowed . 'tx_roqnewsevent_start');
+            }
+
+            if ($demand->getArchiveRestriction() === 'archived') {
+                if ($settings['event']['archived']['orderBy']) {
+                    $demand->setOrder($settings['event']['archived']['orderBy']);
+                } else {
+                    // default ordering for archived events
+                    $demand->setOrder('tx_roqnewsevent_start DESC');
+                }
+            } else if ($settings['event']['orderBy']) {
                 $demand->setOrder($settings['event']['orderBy']);
             } else {
                 // default ordering for active events
                 $demand->setOrder('tx_roqnewsevent_start ASC');
             }
-        }
 
-        if ($settings['event']['startingpoint']) {
-            $demand->setStoragePage(
-                Page::extendPidListByChildren($settings['event']['startingpoint'], $settings['recursive'])
-            );
-        }
+            if ($settings['event']['startingpoint']) {
+                $demand->setStoragePage(
+                    Page::extendPidListByChildren($settings['event']['startingpoint'], $settings['recursive'])
+                );
+            }
 
+        }
         return $demand;
+    }
+
+    protected function eventHook(string $action, string $class)
+    {
+        $this->settings['dateField'] = $this->settings['event']['dateField'] ?? 'eventStart';
+        $this->eventIsEventAction = true;
+        $this->eventActionName = $action;
+        $this->eventClassName = $class;
     }
 
     /**
@@ -206,93 +219,46 @@ class EventController extends NewsController
      *
      * @param array $overwriteDemand
      * @return void
-     *
-     * @SuppressWarnings(PHPMD.Superglobals)
      */
     public function eventDateMenuAction(array $overwriteDemand = null)
     {
-        $this->settings = $this->initializeSettings($this->settings);
-        $demand = $this->eventCreateDemandObjectFromSettings($this->settings);
+        $this->eventHook(__METHOD__, __CLASS__);
+        $demand = $this->createDemandObjectFromSettings($this->settings);
 
-        $eventRecords = $this->eventRepository->findDemanded($demand);
+        $eventRecords = $this->newsRepository->findDemanded($demand);
 
-        if (!$dateField = $this->settings['dateField']) {
-            $dateField = 'eventStart';
-        }
-
-        $this->view->assignMultiple(
-            [
-                'listPid' => ($this->settings['listPid'] ? $this->settings['listPid'] : $GLOBALS['TSFE']->id),
-                'dateField' => $dateField,
-                'events' => $eventRecords,
-                'overwriteDemand' => $overwriteDemand,
-            ]
-        );
+        $this->view->assignMultiple([
+            'events' => $eventRecords,
+            'overwriteDemand' => $overwriteDemand,
+            'demand' => $demand,
+            'categories' => null,
+            'tags' => null,
+            'settings' => $this->settings,
+            'listPid' => $this->settings['listPid'] ?: $GLOBALS['TSFE']->id,
+            'dateField' => $this->settings['dateField'],
+        ]);
     }
 
     /**
      * Output a list view of news events
      *
      * @param array $overwriteDemand
-     * @return string the Rendered view
      */
     public function eventListAction(array $overwriteDemand = null)
     {
-        $this->settings = $this->initializeSettings($this->settings);
-        $demand = $this->eventCreateDemandObjectFromSettings($this->settings);
-
-        if ($this->settings['disableOverrideDemand'] != 1 && $overwriteDemand !== null) {
-            $demand = $this->overwriteDemandObject($demand, $overwriteDemand);
-        }
-
-        $newsRecords = $this->eventRepository->findDemanded($demand);
-
-        $this->view->assignMultiple(
-            [
-                'news' => $newsRecords,
-                'overwriteDemand' => $overwriteDemand,
-            ]
-        );
+        $this->eventHook(__METHOD__, __CLASS__);
+        $this->listAction($overwriteDemand);
     }
 
     /**
      * Single view of a news event record
      *
-     * @param Event $event
-     * @param integer $currentPage current page for optional pagination
-     * @return void
+     * @param Event|News $news news item
+     * @param int $currentPage current page for optional pagination
      */
-    public function eventDetailAction(Event $event = null, $currentPage = 1)
+    public function eventDetailAction(News $news = null, $currentPage = 1)
     {
-        $this->settings = $this->initializeSettings($this->settings);
-
-        if (is_null($event)) {
-            if ((int)$this->settings['singleNews'] > 0) {
-                $previewNewsId = $this->settings['singleNews'];
-            } elseif ($this->request->hasArgument('news_preview')) {
-                $previewNewsId = $this->request->getArgument('news_preview');
-            } else {
-                $previewNewsId = $this->request->getArgument('news');
-            }
-
-            if ($this->settings['previewHiddenRecords']) {
-                $event = $this->eventRepository->findByUid($previewNewsId, false);
-            } else {
-                $event = $this->eventRepository->findByUid($previewNewsId);
-            }
-        }
-
-        if (is_null($event) && isset($this->settings['detail']['errorHandling'])) {
-            $this->handleNoNewsFoundError($this->settings['detail']['errorHandling']);
-        }
-
-        $this->view->assignMultiple(
-            [
-                'newsItem' => $event,
-                'currentPage' => (int)$currentPage,
-            ]
-        );
-
-        Page::setRegisterProperties($this->settings['detail']['registerProperties'], $event);
+        $this->eventHook(__METHOD__, __CLASS__);
+        $this->detailAction($news, $currentPage);
     }
 }
