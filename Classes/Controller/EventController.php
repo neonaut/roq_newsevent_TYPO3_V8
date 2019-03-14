@@ -265,7 +265,7 @@ class EventController extends NewsController
      * @param Event|News $news news item
      * @param int $currentPage current page for optional pagination
      */
-    public function eventDetailAction(News $news = null, $currentPage = 1)
+    public function eventDetailAction(Event $news = null, $currentPage = 1)
     {
         $this->eventHook(__METHOD__, __CLASS__);
         $this->detailAction($news, $currentPage);

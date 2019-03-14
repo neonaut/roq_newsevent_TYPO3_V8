@@ -46,7 +46,6 @@ class Event extends News
      * Event start date
      *
      * @var \DateTime
-     * @validate NotEmpty
      */
     protected $eventStart;
 
