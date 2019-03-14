@@ -62,14 +62,14 @@ class Event extends News
      * @var string
      */
 
-    protected $eventLocation;
+    protected $eventLocation = '';
 
     /**
      * Returns the isEvent
      *
      * @return boolean $isEvent
      */
-    public function getIsEvent()
+    public function getIsEvent(): bool
     {
         return $this->isEvent;
     }
@@ -78,9 +78,8 @@ class Event extends News
      * Sets the isEvent
      *
      * @param boolean $isEvent
-     * @return void
      */
-    public function setIsEvent($isEvent)
+    public function setIsEvent(bool $isEvent)
     {
         $this->isEvent = $isEvent;
     }
@@ -90,13 +89,13 @@ class Event extends News
      *
      * @return boolean
      */
-    public function isIsEvent()
+    public function isIsEvent(): bool
     {
         return $this->getIsEvent();
     }
 
     /**
-     * @return \DateTime
+     * @return \DateTime|null
      */
     public function getEventStart()
     {
@@ -104,7 +103,7 @@ class Event extends News
     }
 
     /**
-     * @return \DateTime
+     * @return \DateTime|null
      */
     public function getEventStarttime()
     {
@@ -120,7 +119,7 @@ class Event extends News
     }
 
     /**
-     * @return \DateTime
+     * @return \DateTime|null
      */
     public function getEventStartdate()
     {
@@ -135,13 +134,13 @@ class Event extends News
     /**
      * @param \DateTime $eventStart
      */
-    public function setEventStart($eventStart)
+    public function setEventStart(\DateTime $eventStart)
     {
         $this->eventStart = $eventStart;
     }
 
     /**
-     * @return \DateTime
+     * @return \DateTime|null
      */
     public function getEventEnd()
     {
@@ -149,38 +148,41 @@ class Event extends News
     }
 
     /**
-     * @return \DateTime
+     * @return \DateTime|null
      */
     public function getEventEndtime()
     {
         if (null === $this->eventEnd) {
             return null;
         }
+
         $dateTime = clone $this->eventStart;
         if ($this->dateTimeHasTimePortion($dateTime)) {
             $dateTime->setDate(0, 0, 0);
             return $dateTime;
         }
+
         return null;
     }
 
     /**
-     * @return \DateTime
+     * @return \DateTime|null
      */
     public function getEventEnddate()
     {
         if (null === $this->eventEnd) {
             return null;
         }
+
         $dateTime = clone $this->eventEnd;
-        $dateTime->setTime(0, 0, 0);
+        $dateTime->setTime(0, 0);
         return $dateTime;
     }
 
     /**
      * @param \DateTime $eventEnd
      */
-    public function setEventEnd($eventEnd)
+    public function setEventEnd(\DateTime $eventEnd)
     {
         $this->eventEnd = $eventEnd;
     }
@@ -190,7 +192,7 @@ class Event extends News
      *
      * @return string $eventLocation
      */
-    public function getEventLocation()
+    public function getEventLocation(): string
     {
         return $this->eventLocation;
     }
@@ -199,9 +201,8 @@ class Event extends News
      * Sets the eventLocation
      *
      * @param string $eventLocation
-     * @return void
      */
-    public function setEventLocation($eventLocation)
+    public function setEventLocation(string $eventLocation)
     {
         $this->eventLocation = $eventLocation;
     }
@@ -209,38 +210,38 @@ class Event extends News
     /**
      * Get year of event start
      *
-     * @return integer
+     * @return integer|null
      */
     public function getYearOfEventStartdate()
     {
-        return $this->getEventStart()->format('Y');
+        return $this->getEventStart() !== null ? (int)$this->getEventStart()->format('Y') : null;
     }
 
     /**
      * Get month of event start
      *
-     * @return integer
+     * @return integer|null
      */
     public function getMonthOfEventStartdate()
     {
-        return $this->getEventStart()->format('m');
+        return $this->getEventStart() !== null ? (int)$this->getEventStart()->format('m') : null;
     }
 
     /**
      * Get day of event start
      *
-     * @return integer
+     * @return integer|null
      */
     public function getDayOfEventStartdate()
     {
-        return $this->getEventStart()->format('d');
+        return $this->getEventStart() !== null ? (int)$this->getEventStart()->format('d') : null;
     }
 
     /**
      * @param \DateTime $dateTime
      * @return bool
      */
-    protected function dateTimeHasTimePortion($dateTime): bool
+    protected function dateTimeHasTimePortion(\DateTime $dateTime): bool
     {
         return !empty(trim($dateTime->format('His'), '0'));
     }
