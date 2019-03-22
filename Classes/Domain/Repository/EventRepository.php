@@ -33,17 +33,15 @@ class EventRepository extends NewsRepository
      */
     protected function eventCreateIsActiveConstraint(QueryInterface $query): OrInterface
     {
-        $timestamp = time(); // + date('Z');
-
         $constraint = $query->logicalOr([
             // future events:
-            $query->greaterThan('tx_roqnewsevent_start', $timestamp),
+            $query->greaterThan('tx_roqnewsevent_start', $GLOBALS['SIM_EXEC_TIME']),
             // current multiple day events:
             $query->logicalAnd([
                 // has begun
-                $query->lessThan('tx_roqnewsevent_start', $timestamp),
+                $query->lessThan('tx_roqnewsevent_start', $GLOBALS['SIM_EXEC_TIME']),
                 // but is not finished
-                $query->greaterThan('tx_roqnewsevent_end', $timestamp),
+                $query->greaterThan('tx_roqnewsevent_end', $GLOBALS['SIM_EXEC_TIME']),
             ]),
         ]);
 
@@ -64,14 +62,18 @@ class EventRepository extends NewsRepository
     {
         $constraints = parent::createConstraintsFromDemand($query, $demand);
 
-        // events only
         if ($demand->eventIsEventAction) {
-            $constraints[] = $query->logicalAnd($query->equals('tx_roqnewsevent_is_event', 1));
-
+            // events only
+            $constraints['eventsOnly'] = $query->equals('tx_roqnewsevent_is_event', 1);
             // the event must have an event start date
-            $constraints[] = $query->logicalAnd(
-                $query->logicalNot($query->equals('tx_roqnewsevent_start', 0))
-            );
+            $constraints['eventsWithStartOnly'] = $query->logicalNot($query->equals('tx_roqnewsevent_start', 0));
+
+            // override archived filter
+            if ($demand->getArchiveRestriction() === 'archived') {
+                $constraints['archived'] = $query->logicalNot($this->eventCreateIsActiveConstraint($query));
+            } elseif ($demand->getArchiveRestriction() === 'active') {
+                $constraints['active'] = $this->eventCreateIsActiveConstraint($query);
+            }
         }
 
         return $constraints;
