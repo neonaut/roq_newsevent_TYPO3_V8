@@ -5,7 +5,7 @@
 	=====================
 		Partials/Event/Item.html
 -->
-<e:if condition="'<f:format.date>{newsItem.eventEnddate}</f:format.date>' != '' && '<f:format.date>{newsItem.eventEnddate}</f:format.date>' != '<f:format.date>{newsItem.eventStartdate}</f:format.date>'">
+<f:if condition="{newsItem.eventEnddate -> f:format.date()} != '' && {newsItem.eventEnddate -> f:format.date()} != {newsItem.eventStartdate -> f:format.date()}">
     <!-- Multiple day event -->
     <f:then>
         <f:if condition="{newsItem.eventStarttime}">
@@ -50,7 +50,7 @@
             </f:else>
         </f:if>
     </f:else>
-</e:if>
+</f:if>
 
 <f:if condition="{newsItem.eventLocation}">
     <br><strong><e:translate key="event_location" />:</strong> {newsItem.eventLocation}
