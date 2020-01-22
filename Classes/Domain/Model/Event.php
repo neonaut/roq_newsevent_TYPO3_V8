@@ -156,7 +156,7 @@ class Event extends News
             return null;
         }
 
-        $dateTime = clone $this->eventStart;
+        $dateTime = clone $this->eventEnd;
         if ($this->dateTimeHasTimePortion($dateTime)) {
             $dateTime->setDate(0, 0, 0);
             return $dateTime;
